@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>Sibilant Test</title>
+  <link rel="stylesheet" href="../bower_components/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <div class="container" id="test-area"></div>
+  <script src="../bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
+  <script src="../bower_components/system.js/dist/system.js"></script>
+  <script>
+    System.baseURL = '../';
+    System.paths['chai'] = 'bower_components/chai/chai.js';
+    System.paths['mocha'] = 'bower_components/mocha/mocha.js';
+    System.paths['sibilant'] = 'bower_components/sibilant/lib/browser.js';
+    System.paths['sibilantc'] = 'sibilant.js';
+
+    System.meta['mocha'] = {
+      format: 'global',
+      exports: 'mocha'
+    };
+
+    System.import('mocha').then(function(mocha) {
+      mocha.setup('bdd');
+
+      return System.import('test/test').then(function() {
+        mocha.run();
+      });
+    }, function(err) {
+      console.error('Error!', err);
+    });
+  </script>
+</body>
+</html>
